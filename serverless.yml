@@ -1,0 +1,96 @@
+service: serverless-http-api-typescript
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  memorySize: 192
+  stage: ${opt:stage, 'local'}
+  region: ${opt:region, 'us-east-1'}
+  endpointType: REGIONAL
+  apiName: TEST CHALLENGE API
+
+custom:
+  serverless-offline:
+    host: 0.0.0.0
+    printOutput: true
+    cacheInvalidationRegex: 'node_modules/'
+
+functions:
+  hello:
+    handler: dist/handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+  category-list:
+    handler: dist/src/handlers/category/list.handler
+    events:
+      - httpApi:
+          path: /api/v1/categories
+          method: get
+  category-create:
+    handler: dist/src/handlers/category/create.handler
+    events:
+      - httpApi:
+          path: /api/v1/categories
+          method: post
+  category-update:
+    handler: dist/src/handlers/category/update.handler
+    events:
+      - httpApi:
+          path: /api/v1/categories/{id}
+          method: patch
+  category-show:
+    handler: dist/src/handlers/category/show.handler
+    events:
+      - httpApi:
+          path: /api/v1/categories/{id}
+          method: get
+  category-delete:
+    handler: dist/src/handlers/category/delete.handler
+    events:
+      - httpApi:
+          path: /api/v1/categories/{id}
+          method: delete
+  product-list:
+    handler: dist/src/handlers/product/list.handler
+    events:
+      - httpApi:
+          path: /api/v1/products
+          method: get
+  product-create:
+    handler: dist/src/handlers/product/create.handler
+    events:
+      - httpApi:
+          path: /api/v1/products
+          method: post
+  product-update:
+    handler: dist/src/handlers/product/update.handler
+    events:
+      - httpApi:
+          path: /api/v1/products/{id}
+          method: patch
+  product-show:
+    handler: dist/src/handlers/product/show.handler
+    events:
+      - httpApi:
+          path: /api/v1/products/{id}
+          method: get
+  product-delete:
+    handler: dist/src/handlers/product/delete.handler
+    events:
+      - httpApi:
+          path: /api/v1/products/{id}
+          method: delete
+  health-check:
+    handler: dist/src/handlers/health/check.handler
+    events:
+      - httpApi:
+          path: /api/v1/health
+          method: get
+  custom-authorizer:
+    handler: dist/src/handlers/authorizer/handler.authorizer
+
+plugins:
+  - serverless-offline

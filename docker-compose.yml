@@ -1,0 +1,94 @@
+version: "3"
+services:
+    # Monitoring service
+    serverless-loki:
+        image: grafana/loki:latest
+        container_name: serverless-loki
+        ports:
+            - "3100:3100"
+        command: -config.file=/etc/loki/local-config.yaml
+        volumes:
+            - ./loki-config/local-config.yaml:/etc/loki/local-config.yaml
+        networks:
+            - serverless-network
+
+    serverless-grafana:
+        image: grafana/grafana:latest
+        container_name: serverless-grafana
+        ports:
+            - "3000:3000"
+        networks:
+            - serverless-network
+        depends_on:
+            - serverless-loki
+
+    # Node service
+    serverless-node:
+        build: .
+        container_name: serverless-node
+        working_dir: /app
+        ports:
+            - "3001:3000"
+        volumes:
+            - ./:/app
+            - /app/node_modules
+            - /app/dist
+        networks:
+            - serverless-network
+        depends_on:
+            - serverless-mongodb
+            - serverless-redis
+            - serverless-loki
+
+    # Mongo database service
+    serverless-mongodb:
+        image: mongo:4.2-bionic
+        container_name: serverless-mongodb
+        ports:
+            - "27018:27017"
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=admin
+            - MONGO_INITDB_ROOT_PASSWORD=pass
+        # named volumes
+        volumes:
+            - mongo-server-db:/data/db
+            - mongo-server-config:/data/configdb
+            - ./mongo-entrypoint/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+        networks:
+            - serverless-network
+
+    serverless-mongodb-rs:
+        build:
+            context: .
+            dockerfile: mongo.Dockerfile
+        container_name: serverless-mongodb-rs
+        restart: always
+        ports:
+            - "27019:27017"
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=admin
+            - MONGO_INITDB_ROOT_PASSWORD=pass
+        volumes:
+            - ./mongo-entrypoint/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+        networks:
+            - serverless-network
+
+    serverless-redis: # Name of container
+        image: redis
+        container_name: serverless-redis
+        ports:
+            - 6380:6379
+        volumes:
+            - redis:/data
+        networks:
+            - serverless-network
+
+volumes:
+    redis:
+        driver: local
+    mongo-server-db:
+    mongo-server-config:
+
+networks:
+    serverless-network:
+        driver: bridge
