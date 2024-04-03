@@ -28,7 +28,7 @@ afterAll(async () => {
   await db.disconnect()
 });
 
-describe('Show category integration tests', () => {
+describe('Update category integration tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
