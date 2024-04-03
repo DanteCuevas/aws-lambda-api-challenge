@@ -10,18 +10,14 @@
 		{
 			"name": "create category",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "pk_test_LsRBKejzCOEEWOsw",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer pk_test_LsRBKejzCOEEWOsw",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n    \"name\": \"category 1\",\n    \"description\": \"description de la categoria\"\n}",
