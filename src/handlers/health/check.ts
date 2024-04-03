@@ -4,6 +4,7 @@ import cache from '../../utils/redis.util'
 import { ResponseHandler } from '../../utils/response.util';
 import { CatchError } from '../../utils/catch.error.util';
 import { HealthCheckAction } from '../../actions/health/check.action';
+import { logger } from '../../utils/logger.util';
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
@@ -13,6 +14,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
 
     return ResponseHandler.success(data)
   } catch (error) {
+    logger.error('Serveless::Category::Health', { error });
     return CatchError.response(error)
   }
 };

@@ -5,6 +5,7 @@ import { ResponseHandler } from '../../utils/response.util'
 import { ValidateAuthorizeAction } from '../../actions/authorize/validate.action'
 import { ListCategoryAction } from '../../actions/category/list.action'
 import { CatchError } from '../../utils/catch.error.util'
+import { logger } from '../../utils/logger.util';
 
 (async () => {
   await cache.connect()
@@ -18,6 +19,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
 
     return ResponseHandler.success({ categories })
   } catch (error) {
+    logger.error('Serveless::Category::List', { error });
     return CatchError.response(error)
   }
 };

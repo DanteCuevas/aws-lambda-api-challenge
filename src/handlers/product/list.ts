@@ -6,6 +6,7 @@ import { ValidateAuthorizeAction } from '../../actions/authorize/validate.action
 import { FilterProductRequest } from '../../requests/product/filter.request'
 import { ListProductAction } from '../../actions/product/list.action'
 import { CatchError } from '../../utils/catch.error.util'
+import { logger } from '../../utils/logger.util';
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
@@ -17,6 +18,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
 
     return ResponseHandler.success(data)
   } catch (error) {
+    logger.error('Serveless::Product::List', { error });
     return CatchError.response(error)
   }
 };

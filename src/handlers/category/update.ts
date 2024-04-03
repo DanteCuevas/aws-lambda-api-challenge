@@ -8,6 +8,7 @@ import { UpdateCategoryAction } from '../../actions/category/update.action'
 import { UpdateCategoryRequest } from '../../requests/category/update.request'
 import { CatchError } from '../../utils/catch.error.util'
 import { ValidateAuthorizeAction } from '../../actions/authorize/validate.action'
+import { logger } from '../../utils/logger.util';
 
 (async () => {
   await cache.connect()
@@ -25,6 +26,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
 
     return ResponseHandler.success({ category })
   } catch (error) {
+    logger.error('Serveless::Category::Update', { error });
     return CatchError.response(error)
   }
 };

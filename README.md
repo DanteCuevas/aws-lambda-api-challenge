@@ -25,7 +25,7 @@ cp .env.test.example .env.test
 ```
 - Iniciar los contenedores:
 ```bash
-docker-compose up -d
+docker-compose up -d --build
 ```
 - Para hacer un build de typescript a commonjs:
 ```bash
@@ -38,4 +38,19 @@ docker-compose exec serverless-node npm run test
 - Para probar los endpoints usar el archivo de postman.collections adjuntado:
 ```bash
 ServerlessTest.postman_collection.json
+```
+
+**SERVER AWS (TEMP)**
+
+- Check health with curl:
+```bash
+http://ec2-44-206-231-127.compute-1.amazonaws.com:4000/api/v1/health
+```
+- Url Grafana:
+```bash
+http://ec2-44-206-231-127.compute-1.amazonaws.com:3000
+```
+- Url Video:
+```bash
+https://drive.google.com/file/d/1Y46fc5GYd9XAb97JsHa1NC17x7wAmdy5/view?usp=sharing
 ```
