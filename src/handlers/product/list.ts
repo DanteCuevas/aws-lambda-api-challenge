@@ -12,7 +12,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   try {
     await db.connect();
     (new ValidateAuthorizeAction(event.headers.authorization)).run()
-    const params = event.queryStringParameters as IProductFilter;
+    const params = event.queryStringParameters as IProductFilter || {}
     await FilterProductRequest.validate(params)
     const data = await (new ListProductAction()).run(params)
 

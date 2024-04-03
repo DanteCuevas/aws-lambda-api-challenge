@@ -1,6 +1,7 @@
 import Joi from 'joi'
 import { IProductQueryParams } from '../../interfaces/product.interface'
 import { isValidObjectId } from '../../utils/validation.util'
+import { ShowProductExtraDBRequest } from './show.extra.db.request'
 
 const rulesJoi = Joi.object({
   id: Joi.string()
@@ -19,6 +20,7 @@ const rulesJoi = Joi.object({
 class ShowProductRequest {
   public static validate = async (body: IProductQueryParams) => {
     await rulesJoi.validateAsync(body)
+    await ShowProductExtraDBRequest.validate(body)
   }
 }
 

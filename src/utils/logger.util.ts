@@ -14,6 +14,12 @@ const lokiTransport = new LokiTransport({
   )
 });
 
+export const cleanup = () => {
+  if (lokiTransport.close) {
+    lokiTransport.close();
+  }
+};
+
 export const logger = createLogger({
   level: 'info',
   transports: [lokiTransport]

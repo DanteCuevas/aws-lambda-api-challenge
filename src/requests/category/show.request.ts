@@ -1,6 +1,7 @@
 import Joi from 'joi'
 import { ICategoryQueryParams } from '../../interfaces/category.interface'
 import { isValidObjectId } from '../../utils/validation.util'
+import { ShowCategoryExtraDBRequest } from './show.extra.db.request'
 
 const rulesJoi = Joi.object({
   id: Joi.string()
@@ -19,6 +20,7 @@ const rulesJoi = Joi.object({
 class ShowCategoryRequest {
   public static validate = async (body: ICategoryQueryParams) => {
     await rulesJoi.validateAsync(body)
+    await ShowCategoryExtraDBRequest.validate(body)
   }
 }
 

@@ -1,6 +1,6 @@
 import { APIGatewayProxyEventPart } from '../../interfaces/event.generator.interface'
 
-const APIGatewayRequest = ({
+const eventGenerator = ({
   body,
   headers = {},
   httpMethod,
@@ -10,7 +10,7 @@ const APIGatewayRequest = ({
   stageVariables = null
 }: APIGatewayProxyEventPart) => {
   const request = {
-    body: body ? JSON.stringify(body) : null,
+    body: body || null,
     headers,
     multiValueHeaders: {},
     httpMethod,
@@ -52,4 +52,4 @@ const APIGatewayRequest = ({
   return request;
 };
 
-module.exports = APIGatewayRequest;
+export { eventGenerator }

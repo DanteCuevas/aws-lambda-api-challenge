@@ -8,6 +8,7 @@ import { logger } from '../../utils/logger.util';
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
+    logger.info('Serveless::Category::Health', { date: new Date() });
     await db.connect();
     await cache.connect()
     const data = await (new HealthCheckAction()).run();
