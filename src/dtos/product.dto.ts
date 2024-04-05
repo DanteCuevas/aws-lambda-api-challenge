@@ -30,7 +30,7 @@ class ProductDto {
 
   private static getCategory = async (id: string): Promise<ICategoryShort> => {
     const categoryRepository = new CategoryRepository()
-    const category = await categoryRepository.findOne(new ObjectId(id)) as Category;
+    const category = await categoryRepository.findById(new ObjectId(id)) as Category;
     return {
       _id: category._id,
       name: category.name
