@@ -12,7 +12,7 @@ class CreateProductAction {
 
   public run = async (): Promise<Product> => {
     const product = await this.productRepository.insertOne(this.data)
-    const productResult = await this.productRepository.findOne(product.insertedId)
+    const productResult = await this.productRepository.findById(product.insertedId)
 
     return productResult as Product
   }

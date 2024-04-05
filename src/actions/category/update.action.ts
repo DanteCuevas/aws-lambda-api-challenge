@@ -15,8 +15,8 @@ class UpdateCategoryAction {
   }
 
   public run = async (): Promise<Category> => {
-    await this.categoryRepository.updateOne(this.id, this.data)
-    const categoryResult = await this.categoryRepository.findOne(this.id)
+    await this.categoryRepository.updateById(this.id, this.data)
+    const categoryResult = await this.categoryRepository.findById(this.id)
     await cache.del('Categories')
 
     return categoryResult as Category

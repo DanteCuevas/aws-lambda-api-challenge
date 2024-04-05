@@ -13,7 +13,7 @@ class CreateCategoryAction {
 
   public run = async (): Promise<Category> => {
     const category = await this.categoryRepository.insertOne(this.data)
-    const categoryResult = await this.categoryRepository.findOne(category.insertedId)
+    const categoryResult = await this.categoryRepository.findById(category.insertedId)
     await cache.del('Categories')
 
     return categoryResult as Category

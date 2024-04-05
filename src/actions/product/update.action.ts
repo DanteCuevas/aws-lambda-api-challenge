@@ -14,8 +14,8 @@ class UpdateProductAction {
   }
 
   public run = async (): Promise<Product> => {
-    await this.productRepository.updateOne(this.id, this.data)
-    const categoryResult = await this.productRepository.findOne(this.id)
+    await this.productRepository.updateById(this.id, this.data)
+    const categoryResult = await this.productRepository.findById(this.id)
     return categoryResult as Product
   }
 }

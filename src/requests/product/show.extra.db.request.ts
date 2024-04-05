@@ -10,7 +10,7 @@ class ShowProductExtraDBRequest {
 
   private static existsProduct = async (id: string): Promise<void> => {
     const productRepository = new ProductRepository()
-    const product = await productRepository.findOne(new ObjectId(id))
+    const product = await productRepository.findById(new ObjectId(id))
     if (!product) {
       throw new MongoValidationError('Product not exist', 'id')
     }

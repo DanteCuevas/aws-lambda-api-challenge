@@ -12,7 +12,7 @@ class ShowCategoryAction {
   }
 
   public run = async (): Promise<Category> => {
-    const categoryResult = await this.categoryRepository.findOne(this.id)
+    const categoryResult = await this.categoryRepository.findById(this.id)
 
     return categoryResult as Category
   }

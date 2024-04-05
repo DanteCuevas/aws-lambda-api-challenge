@@ -10,7 +10,7 @@ class ShowCategoryExtraDBRequest {
 
   private static existsCategory = async (id: string): Promise<void> => {
     const categoryRepository = new CategoryRepository()
-    const category = await categoryRepository.findOne(new ObjectId(id))
+    const category = await categoryRepository.findById(new ObjectId(id))
     if (!category) {
       throw new MongoValidationError('"Category" not exist', 'id')
     }

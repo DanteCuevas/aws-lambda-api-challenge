@@ -8,7 +8,7 @@ export class BaseRepository<T> {
     return find
   }
 
-  public async findOne (id: ObjectId): Promise<WithId<T> | null> {
+  public async findById (id: ObjectId): Promise<WithId<T> | null> {
     const query: Filter<Document> = {
       _id: id
     }
@@ -21,14 +21,14 @@ export class BaseRepository<T> {
     return insert as unknown as Promise<InsertOneResult>
   }
 
-  public async updateOne (id: ObjectId, update: Partial<T>): Promise<void> {
+  public async updateById (id: ObjectId, update: Partial<T>): Promise<void> {
     const query: Filter<Document> = {
       _id: id
     }
     await this.collection?.updateOne(query, { $set: update });
   }
 
-  public async deleteOne (id: ObjectId): Promise<void> {
+  public async deleteById (id: ObjectId): Promise<void> {
     const query: Filter<Document> = {
       _id: id
     }

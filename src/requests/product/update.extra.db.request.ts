@@ -12,7 +12,7 @@ class UpdateProductExtraDBRequest {
 
   private static existsProduct = async (id: string): Promise<void> => {
     const productRepository = new ProductRepository()
-    const product = await productRepository.findOne(new ObjectId(id))
+    const product = await productRepository.findById(new ObjectId(id))
     if (!product) {
       throw new MongoValidationError('Product not exist', 'id')
     }
@@ -20,7 +20,7 @@ class UpdateProductExtraDBRequest {
 
   private static existsCategory = async (id: string): Promise<void> => {
     const categoryRepository = new CategoryRepository()
-    const category = await categoryRepository.findOne(new ObjectId(id))
+    const category = await categoryRepository.findById(new ObjectId(id))
     if (!category) {
       throw new MongoValidationError('"category_id" not exist', 'category_id')
     }

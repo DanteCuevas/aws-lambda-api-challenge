@@ -11,7 +11,7 @@ class DeleteProductAction {
   }
 
   public run = async (): Promise<void> => {
-    await this.productRepository.deleteOne(this.id)
+    await this.productRepository.deleteById(this.id)
   }
 }
 

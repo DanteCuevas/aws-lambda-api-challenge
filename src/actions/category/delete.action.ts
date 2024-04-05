@@ -12,7 +12,7 @@ class DeleteCategoryAction {
   }
 
   public run = async (): Promise<void> => {
-    await this.categoryRepository.deleteOne(this.id)
+    await this.categoryRepository.deleteById(this.id)
     await cache.del('Categories')
   }
 }
